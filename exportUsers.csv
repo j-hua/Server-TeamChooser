@@ -1,0 +1,4 @@
+name,email,username,password
+test,test@gmail.com,test,$2a$10$BfZTMW2w957juBWDWtRswOszhqGcy8gNOHQMhix66Zpx8vw5YQrmG
+jeffrey,jeff@test.ca,JHUA,$2a$10$DDitVMfClGZtQFdkDfGB0emSDs.yRvFwLSUjflgMz12/WWIrd7Vsu
+git,git.push@heroku.ca,git push,$2a$10$ONmlChnHMmSTCOzYwNPO/uNkTibFvFrAm6x93I5sK4zk3DtFa756a

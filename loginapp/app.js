@@ -11,7 +11,14 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/loginapp');
+mongoose.connect('mongodb://localhost/hockey',function(err){
+  if(err){
+    throw err;
+  }else{
+    console.log("connected");
+  }
+});
+
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
