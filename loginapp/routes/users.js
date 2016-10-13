@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var JsonStrategy = require('passport-json').Strategy;
 
 //Get HomePage
 router.get('/register',function(req,res){
@@ -109,13 +110,15 @@ router.post('/signup',function(req,res){
 });
 
 router.post('/login', 
-	passport.authenticate('local',{successRedirect:'/',failureRedirect:'/login',failureFlash:true}),
+	passport.authenticate('json'/*,{successRedirect:'/',failureRedirect:'/login',failureFlash:true}*/),
 	function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     console.log("auth successful");
+    res.sendStatus(200);
   });
 
+/*
 passport.use(new LocalStrategy(
   function(username, password, done) {
   	User.getUserByUsername(username,function(err,user){
@@ -144,6 +147,39 @@ passport.use(new LocalStrategy(
   	});
 
   }));
+*/
+
+
+
+passport.use(new JsonStrategy(
+  	{	passwordProp: 'passwd'	},
+  	function(username, passwd, done) {
+     	User.getUserByUsername(username,function(err,user){
+  		if(err) throw err;
+  		if(!user){
+  		//	res.sendStatus(404);
+  			console.log("Unknown username");
+  			return done(null,false,{message: 'Unknown User'});
+  		}else{
+  			console.log(user);
+  		}
+
+  		User.comparePassword(passwd,user.passwd,function(err,isMatch){
+  			if(err) throw err;
+  			if(isMatch){
+  				console.log("passwd OK!")
+  				return done(null,user)
+  			}else{
+  				console.log("Invalid passwd");
+  				return done(null,false,{message: 'Invalid password'});
+ 
+  			}
+  		});
+
+  	});
+
+  }
+));
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
