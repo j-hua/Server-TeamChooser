@@ -15,6 +15,7 @@ router.get('/login',function(req,res){
 });
 
 // Register User
+/*
 router.post('/register',function(req,res){
 	var name = req.body.name;
 	var email = req.body.email;
@@ -54,13 +55,65 @@ router.post('/register',function(req,res){
 	}
 
 });
+*/
+
+//user sign up from android application
+router.post('/signup',function(req,res){
+	var reqDisplayname = req.body.displayname;
+	var reqEmail = req.body.email;
+	var reqUsername = req.body.username;
+	var reqPasswd = req.body.passwd;
+
+	// Validation
+	req.checkBody('displayname', 'display name is required').notEmpty();
+	req.checkBody('email', 'Email is required').notEmpty();
+	req.checkBody('email', 'Email is not valid').isEmail();
+	req.checkBody('username', 'Username is required').notEmpty();
+	req.checkBody('passwd', 'Password is required').notEmpty();
+
+	var errors = req.validationErrors();
+
+
+	if(errors){
+
+		res.sendStatus(400);
+		console.log(errors);
+
+	}else{
+
+		console.log('PASSED');
+
+		var newUser = new User({
+			displayname: reqDisplayname,
+			email: reqEmail,
+			username: reqUsername,
+			passwd: reqPasswd
+		});
+
+		User.getUserByUsername(reqUsername,function(err,document){
+			if(err) throw err;
+			if(document){
+				console.log("username already exists");
+				res.sendStatus(409);
+			}else{
+
+				User.createUser(newUser, function(err,newUser){
+					if(err) throw err;
+					console.log(newUser);
+					res.sendStatus(200);
+				});
+			}
+		});
+
+	}
+});
 
 router.post('/login', 
-	passport.authenticate('local',{successRedirect:'/',failureRedirect:'/users/login',failureFlash:true}),
+	passport.authenticate('local',{successRedirect:'/',failureRedirect:'/login',failureFlash:true}),
 	function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    res.r('/');
+    console.log("auth successful");
   });
 
 passport.use(new LocalStrategy(
@@ -68,15 +121,23 @@ passport.use(new LocalStrategy(
   	User.getUserByUsername(username,function(err,user){
   		if(err) throw err;
   		if(!user){
+  		//	res.sendStatus(404);
+  			console.log("Unknown username");
   			return done(null,false,{message: 'Unknown User'});
+  		}else{
+  			console.log(user);
   		}
 
-  		User.comparePassword(password,user.password,function(err,isMatch){
+  		User.comparePassword(password,user.passwd,function(err,isMatch){
   			if(err) throw err;
   			if(isMatch){
+  				console.log("passwd OK!")
   				return done(null,user);
+  				res.sendStatus(200);
   			}else{
+  				console.log("Invalid passwd");
   				return done(null,false,{message: 'Invalid password'});
+  				res.sendStatus(409);
   			}
   		});
 

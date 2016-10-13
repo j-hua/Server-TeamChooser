@@ -16,6 +16,7 @@ router.get('/test/:testparam',function(req,res){
 
 
 router.post('/', function(req, res){
+
 	var obj = req.body;
 //	var obj = JSON.parse(array);
 	console.log(obj);
@@ -40,9 +41,11 @@ router.post('/', function(req, res){
 //	var errors = req.validationErrors();
 });
 
+/*
 router.post('/login', function(req, res){
+
 	var obj = req.body;
-//	var obj = JSON.parse(array);
+
 	console.log(obj);
 	req.checkBody('username', 'username cannot be empty').notEmpty();
 	req.checkBody('passwd','passwd cannot be empty').notEmpty();
@@ -50,31 +53,10 @@ router.post('/login', function(req, res){
 	res.sendStatus(200);
 
 });
-
-router.post('/signup', function(req, res){
-	var obj = req.body;
-//	var obj = JSON.parse(array);
-	
-	req.checkBody('username', 'username cannot be empty').notEmpty();
-	req.checkBody('passwd','password cannot be empty').notEmpty();
-	req.checkBody('email', 'email cannot be empty').notEmpty();
-	req.checkBody('displayname','displayname cannot be empty').notEmpty();
-
-	console.log(obj);
-	
-	var errors = req.validationErrors();
-
-	if(errors){
-		res.sendStatus(errors);
-	}else{
-		res.sendStatus(200);
-	}
-
-	
-
-});
+*/
 
 router.post('/recovery', function(req, res){
+
 	var obj = req.body;
 //	var obj = JSON.parse(array);
 	
@@ -84,4 +66,5 @@ router.post('/recovery', function(req, res){
 	res.sendStatus(200);
 
 });
+
 module.exports = router;

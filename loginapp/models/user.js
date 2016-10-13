@@ -11,13 +11,13 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		index:true
 	},
-	password:{
+	passwd:{
 		type: String,
 	},
 	email:{
 		type: String
 	},
-	name:{
+	displayname:{
 		type: String
 	}
 });
@@ -27,8 +27,8 @@ var User = module.exports = mongoose.model('User',UserSchema);
 
 module.exports.createUser = function(newUser, callback){
 	bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(newUser.password, salt, function(err, hash) {
-	        newUser.password = hash;
+	    bcrypt.hash(newUser.passwd, salt, function(err, hash) {
+	        newUser.passwd = hash;
 	        newUser.save(callback);
 	    });
 	});

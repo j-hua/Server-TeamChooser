@@ -83,7 +83,8 @@ app.use(function (req, res, next) {
 
 
 app.use('/', routes);
-app.use('/users', users);
+//app.use('/users', users);
+app.use('/',users);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));
@@ -91,7 +92,3 @@ app.set('port', (process.env.PORT || 3000));
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
-
-//var str = '{"teamID":"511","teamember1":"Jef","teammember2":"joh","teammember3":"viv","teammember4":"alex"}';
-//var obj = JSON.parse(str);
-//console.log(obj);
