@@ -200,6 +200,24 @@ router.post('/:userId/creategame', function(req, res) {
   
 });
 
+router.delete('/:userId/:gameId', function(req, res) {
+    var found = false;
+    //database query to find game and delete it
+	Game.getGameById(req.params.gameId,function(err,document){
+	if(err) throw err;
+	if(document){
+		console.log("Game exists, deleting it");
+		Game.getGameByIdandRemove(req.params.gameId,function(err,document) {
+			if(err) throw err;
+		});
+		res.status(200).send('Game Deleted!');
+	}else{
+		res.status(404).send('No Game found!');	
+	}
+	});
+    
+});
+
 passport.use(new JsonStrategy(
   	{	passwordProp: 'passwd'	},
   	function(username, passwd, done) {

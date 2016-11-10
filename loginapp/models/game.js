@@ -30,15 +30,19 @@ module.exports.createGame = function(newGame, callback){
 }
 
 /*
-module.exports.getUserByUsername = function(username,callback){
-	var query = {username: username};
+module.exports.getGameById = function(id,callback){
+	var query = {_id: id};
 	User.findOne(query,callback);
+}*/
+
+module.exports.getGameById = function(id,callback){
+	Game.findById(id,callback);
 }
 
-module.exports.getUserById = function(id,callback){
-	User.findById(id,callback);
+module.exports.getGameByIdandRemove = function(id,callback){
+	Game.findByIdAndRemove(id,callback);
 }
-
+/*
 module.exports.comparePassword = function(candidatePassword,hash,callback){
 	bcrypt.compare(candidatePassword,hash,function(err,isMatch){
 		if(err) throw err;
