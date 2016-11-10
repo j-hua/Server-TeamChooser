@@ -15,10 +15,14 @@ var UserSchema = mongoose.Schema({
 		type: String,
 	},
 	teamA:{
-		type: String,
+		name: {type: String, trim: true},
+		id: Number
+		//type: String,
 	},
 	teamB:{
-		type: String,
+		name: {type: String, trim: true},
+		id: Number
+		//type: String,
 	}
 });
 
@@ -42,6 +46,13 @@ module.exports.getGameById = function(id,callback){
 module.exports.getGameByIdandRemove = function(id,callback){
 	Game.findByIdAndRemove(id,callback);
 }
+
+/*
+module.exports.getAllGamesByUserID = function(id,callback){
+	var query = {teamA.id:id,teamB.id:id};
+	Game.find(query,callback);
+}*/
+
 /*
 module.exports.comparePassword = function(candidatePassword,hash,callback){
 	bcrypt.compare(candidatePassword,hash,function(err,isMatch){

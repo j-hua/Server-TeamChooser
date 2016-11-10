@@ -191,14 +191,14 @@ router.post('/:userId/creategame', function(req, res) {
 		//write into database 
 		Game.createGame(newGame, function(err,newGame){
 					if(err) throw err;
-					console.log(newGame._id);		
+					console.log(newGame);		
 				//	res.sendStatus(200);
 					res.json({id: newGame._id});   
 		});
 	}
-
   
 });
+
 
 router.delete('/:userId/:gameId', function(req, res) {
     var found = false;
