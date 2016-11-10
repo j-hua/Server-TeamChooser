@@ -6,22 +6,24 @@ var UserSchema = mongoose.Schema({
 		type: String,
 	},
 	hasBODCount:{
-		type: String,
+		type: Boolean,
+		default:false,
 	},
 	hasBODRatings:{
-		type: String,
+		type: Boolean,
+		default: false,
 	},
 	hasSuperOptimizer:{
-		type: String,
+		type: Boolean,
+		default: false,
+
 	},
 	teamA:{
 		name: {type: String, trim: true},
-		id: Number
 		//type: String,
 	},
 	teamB:{
 		name: {type: String, trim: true},
-		id: Number
 		//type: String,
 	}
 });
