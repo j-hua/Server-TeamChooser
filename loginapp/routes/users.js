@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Game = require('../models/game');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var JsonStrategy = require('passport-json').Strategy;
@@ -109,6 +110,8 @@ router.post('/signup',function(req,res){
 	}
 });
 
+
+
 router.post('/login', 
 	passport.authenticate('json'/*,{successRedirect:'/',failureRedirect:'/login',failureFlash:true}*/),
 	function(req, res) {
@@ -149,7 +152,53 @@ passport.use(new LocalStrategy(
   }));
 */
 
+router.post('/:userId/creategame', function(req, res) {
+	console.log("HELLO");
 
+	var reqGameName = req.body.gameName;
+	var reqHasBODCount = req.body.hasBODCount;
+	var reqHasBODRatings = req.body.hasBODRatings;
+	var reqHasSuperOptimizer = req.body.hasSuperOptimizer;
+	var reqTeamA = req.body.teamA;
+	var reqTeamB = req.body.teamB;
+    //add game to the database with these attributes
+  	req.checkBody('gameName', 'game name is required').notEmpty();
+	req.checkBody('hasBODCount', 'hasBODCount is required').notEmpty();
+	req.checkBody('hasBODRatings', 'hasBODRatings is required').notEmpty();
+	req.checkBody('hasSuperOptimizer', 'hasSuperOptimizer is not valid').notEmpty();
+	req.checkBody('teamA', 'teamA is required').notEmpty();
+	req.checkBody('teamB', 'teamB is required').notEmpty();
+
+	var errors = req.validationErrors();
+
+
+	if(errors){
+		res.sendStatus(400);
+		console.log("400!");
+		console.log(errors);
+	}else{
+
+		console.log('Game Request PASSED');
+
+		var newGame = new Game({
+			gameName: reqGameName,
+			hasBODCount: reqHasBODCount,
+			hasBODRatings: reqHasBODRatings,
+			hasSuperOptimizer: reqHasSuperOptimizer,
+			teamA: reqTeamA,
+			teamB: reqTeamB
+		});
+		//write into database 
+		Game.createGame(newGame, function(err,newGame){
+					if(err) throw err;
+					console.log(newGame._id);		
+				//	res.sendStatus(200);
+					res.json({id: newGame._id});   
+		});
+	}
+
+  
+});
 
 passport.use(new JsonStrategy(
   	{	passwordProp: 'passwd'	},
