@@ -13,18 +13,26 @@ var UserSchema = mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
+	
 	hasSuperOptimizer:{
 		type: Boolean,
 		default: false,
 
 	},
 	teamA:{
+<<<<<<< Updated upstream:launch/models/game.js
 		name: {type: String, trim: true},
 		//type: String,
 	},
 	teamB:{
 		name: {type: String, trim: true},
 		//type: String,
+=======
+		name: {type: String, trim: true}
+	},
+	teamB:{
+		name: {type: String, trim: true} 
+>>>>>>> Stashed changes:loginapp/models/game.js
 	}
 });
 
