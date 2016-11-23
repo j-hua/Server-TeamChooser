@@ -20,19 +20,17 @@ var UserSchema = mongoose.Schema({
 
 	},
 	teamA:{
-<<<<<<< Updated upstream:launch/models/game.js
+
 		name: {type: String, trim: true},
 		//type: String,
 	},
 	teamB:{
 		name: {type: String, trim: true},
 		//type: String,
-=======
 		name: {type: String, trim: true}
 	},
 	teamB:{
 		name: {type: String, trim: true} 
->>>>>>> Stashed changes:loginapp/models/game.js
 	}
 });
 
