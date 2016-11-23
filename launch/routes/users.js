@@ -163,6 +163,7 @@ router.post('/:userId/creategame', function(req, res) {
 	var reqHasSuperOptimizer = req.body.hasSuperOptimizer;
 	var reqTeamA = req.body.teamA;
 	var reqTeamB = req.body.teamB;
+	var reqPlayers = req.body.players;
     //add game to the database with these attributes
   	req.checkBody('gameName', 'game name is required').notEmpty();
 	req.checkBody('hasBODCount', 'hasBODCount is required').notEmpty();
@@ -172,7 +173,6 @@ router.post('/:userId/creategame', function(req, res) {
 	req.checkBody('teamB', 'teamB is required').notEmpty();
 
 	var errors = req.validationErrors();
-
 
 	if(errors){
 		res.sendStatus(400);
@@ -188,7 +188,8 @@ router.post('/:userId/creategame', function(req, res) {
 			hasBODRatings: reqHasBODRatings,
 			hasSuperOptimizer: reqHasSuperOptimizer,
 			teamA: reqTeamA,
-			teamB: reqTeamB
+			teamB: reqTeamB,
+			players: reqPlayers
 		});
 		//write into database 
 		Game.createGame(newGame, function(err,newGame){

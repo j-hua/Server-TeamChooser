@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // User Schema
-var UserSchema = mongoose.Schema({
+var GameSchema = mongoose.Schema({
 	gameName:{
 		type: String,
 	},
@@ -13,29 +13,27 @@ var UserSchema = mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
-	
 	hasSuperOptimizer:{
 		type: Boolean,
 		default: false,
-
 	},
 	teamA:{
-
 		name: {type: String, trim: true},
-		//type: String,
 	},
 	teamB:{
 		name: {type: String, trim: true},
-		//type: String,
-		name: {type: String, trim: true}
 	},
-	teamB:{
-		name: {type: String, trim: true} 
-	}
+	players:
+		[{isSelected:Boolean, 
+			name:String, 
+			preassign:Boolean, 
+			rating:Number, 
+			team:String,
+			position:String}]
 });
 
 //to access from outside of this file
-var Game = module.exports = mongoose.model('Game',UserSchema);
+var Game = module.exports = mongoose.model('Game',GameSchema);
 
 module.exports.createGame = function(newGame, callback){
 	newGame.save(callback);
