@@ -121,7 +121,7 @@ router.post('/login',
     console.log(req.user._id);
     console.log("auth successful");
 	var allGames = [];
-	Game.find({"userId":"1233"},function(err,doc){
+	Game.find({"userId":req.user._id},function(err,doc){
 		allGames = doc;
 		res.status(200).json({userId: req.user._id, allGames:allGames});
 	}); 
