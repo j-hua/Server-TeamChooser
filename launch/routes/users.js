@@ -92,6 +92,7 @@ router.post('/signup',function(req,res){
 			passwd: reqPasswd
 		});
 
+
 		User.getUserByUsername(reqUsername,function(err,document){
 			if(err) throw err;
 			if(document){
@@ -119,8 +120,11 @@ router.post('/login',
     // `req.user` contains the authenticated user.
     console.log(req.user._id);
     console.log("auth successful");
-    res.status(200).json({userId: req.user._id});
-
+	var allGames = [];
+	Game.find({"userId":"1233"},function(err,doc){
+		allGames = doc;
+		res.status(200).json({userId: req.user._id, allGames:allGames});
+	}); 
   });
 
 /*
@@ -158,17 +162,18 @@ router.post('/:userId/creategame', function(req, res) {
 	console.log("HELLO");
 
 	var reqGameName = req.body.gameName;
-	var reqHasBODCount = req.body.hasBODCount;
-	var reqHasBODRatings = req.body.hasBODRatings;
-	var reqHasSuperOptimizer = req.body.hasSuperOptimizer;
+//	var reqHasBODCount = req.body.hasBODCount;
+//	var reqHasBODRatings = req.body.hasBODRatings;
+//	var reqHasSuperOptimizer = req.body.hasSuperOptimizer;
 	var reqTeamA = req.body.teamA;
 	var reqTeamB = req.body.teamB;
-	var reqPlayers = req.body.players;
+	var reqUserId = req.params.userId;
+//	var reqPlayers = req.body.players;
     //add game to the database with these attributes
   	req.checkBody('gameName', 'game name is required').notEmpty();
-	req.checkBody('hasBODCount', 'hasBODCount is required').notEmpty();
-	req.checkBody('hasBODRatings', 'hasBODRatings is required').notEmpty();
-	req.checkBody('hasSuperOptimizer', 'hasSuperOptimizer is not valid').notEmpty();
+//	req.checkBody('hasBODCount', 'hasBODCount is required').notEmpty();
+//	req.checkBody('hasBODRatings', 'hasBODRatings is required').notEmpty();
+//	req.checkBody('hasSuperOptimizer', 'hasSuperOptimizer is not valid').notEmpty();
 	req.checkBody('teamA', 'teamA is required').notEmpty();
 	req.checkBody('teamB', 'teamB is required').notEmpty();
 
@@ -184,18 +189,18 @@ router.post('/:userId/creategame', function(req, res) {
 
 		var newGame = new Game({
 			gameName: reqGameName,
-			hasBODCount: reqHasBODCount,
-			hasBODRatings: reqHasBODRatings,
-			hasSuperOptimizer: reqHasSuperOptimizer,
+		//	hasBODCount: reqHasBODCount,
+		//	hasBODRatings: reqHasBODRatings,
+		//	hasSuperOptimizer: reqHasSuperOptimizer,
 			teamA: reqTeamA,
 			teamB: reqTeamB,
-			players: reqPlayers
+			userId: reqUserId
+		//	players: reqPlayers
 		});
 		//write into database 
 		Game.createGame(newGame, function(err,newGame){
 					if(err) throw err;
 					console.log(newGame);		
-				//	res.sendStatus(200);
 					res.json({id: newGame._id});   
 		});
 	}

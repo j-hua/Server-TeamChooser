@@ -5,31 +5,23 @@ var GameSchema = mongoose.Schema({
 	gameName:{
 		type: String,
 	},
-	hasBODCount:{
-		type: Boolean,
-		default:false,
-	},
-	hasBODRatings:{
-		type: Boolean,
-		default: false,
-	},
-	hasSuperOptimizer:{
-		type: Boolean,
-		default: false,
-	},
 	teamA:{
 		name: {type: String, trim: true},
 	},
 	teamB:{
 		name: {type: String, trim: true},
 	},
+	userId:{
+		type: String,
+	}
+	/*,
 	players:
 		[{isSelected:Boolean, 
 			name:String, 
 			preassign:Boolean, 
 			rating:Number, 
 			team:String,
-			position:String}]
+			position:String}]*/
 });
 
 //to access from outside of this file
@@ -38,6 +30,7 @@ var Game = module.exports = mongoose.model('Game',GameSchema);
 module.exports.createGame = function(newGame, callback){
 	newGame.save(callback);
 }
+
 
 /*
 module.exports.getGameById = function(id,callback){
