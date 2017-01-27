@@ -187,6 +187,20 @@ router.post('/:userId/:gameId/createplayer', function(req, res) {
 });
 
 
+router.get('/:userId/:gameId/allplayers',function(req,res){
+	Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
+		if(err) throw err;
+		if(document != ""){
+			var allPlayers = document.players;
+			console.log(document);
+			res.json({allPlayers:allPlayers});
+		}else{
+			res.status(404).send('Game Not Found');  	
+		}
+	});
+});
+
+
 router.put('/:userId/:gameId/updategame', function(req, res) {
 	console.log("user " + req.params.userId + " requsted to update the game " + req.params.gameId);
 
