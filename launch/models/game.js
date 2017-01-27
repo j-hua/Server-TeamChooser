@@ -14,15 +14,13 @@ var GameSchema = mongoose.Schema({
 	},
 	userId:{
 		type: String,
-	}
-	/*,
+	},
 	players:
-		[{isSelected:Boolean, 
+		[{
+			playerId: String,
 			name:String, 
-			preassign:Boolean, 
 			rating:Number, 
-			team:String,
-			position:String}]*/
+		}]
 });
 
 //to access from outside of this file
@@ -36,6 +34,16 @@ module.exports.updateGame = function(editGame, callback){
 	//console.log(editGame);
 	Game.update({_id:new ObjectId(editGame._id)}, {$set: {gameName:editGame.gameName,
 		teamA:editGame.teamA,teamB:editGame.teamB,userId:editGame.userId}},callback);
+}
+
+module.exports.createPlayer = function(playerBuff, callback){
+	var pId = new ObjectId();
+	Game.update({_id:new ObjectId(playerBuff.gameId)}, {$push: {players:{
+		name:playerBuff.name,
+		rating:playerBuff.rating,
+		playerId:pId
+	}}},callback);
+	return pId;
 }
 
 /*

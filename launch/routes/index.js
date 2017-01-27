@@ -1,20 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-//Get HomePage
-router.get('/',function(req,res){
-	res.render('index');
-});
-
-router.get('/test',function(req,res){
-	res.send("test page");
-});
-
-router.get('/test/:testparam',function(req,res){
-	res.send(req.params.testparam + " test page");
-});
-
-
 router.post('/', function(req, res){
 
 	var obj = req.body;

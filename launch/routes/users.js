@@ -18,49 +18,6 @@ router.get('/login',function(req,res){
 	res.render('login');
 });
 
-// Register User
-/*
-router.post('/register',function(req,res){
-	var name = req.body.name;
-	var email = req.body.email;
-	var username = req.body.username;
-	var password = req.body.password;
-	var password2 = req.body.password2;
-
-	// Validation
-	req.checkBody('name', 'Name is required').notEmpty();
-	req.checkBody('email', 'Email is required').notEmpty();
-	req.checkBody('email', 'Email is not valid').isEmail();
-	req.checkBody('username', 'Username is required').notEmpty();
-	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
-	var errors = req.validationErrors();
-
-	if(errors){
-		res.render('register',{errors: errors});
-	}else{
-		console.log('PASSED');
-		var newUser = new User({
-			name: name,
-			email: email,
-			username: username,
-			password: password
-		});
-
-		User.createUser(newUser, function(err,newUser){
-			if(err) throw err;
-			console.log(newUser);
-		});
-
-		req.flash('success_msg', 'You are registered and can now log in');
-
-		res.redirect('/users/login');
-	}
-
-});
-*/
-
 //user sign up from android application
 router.post('/signup',function(req,res){
 	var reqDisplayname = req.body.displayname;
@@ -209,6 +166,27 @@ router.post('/:userId/creategame', function(req, res) {
   
 });
 
+router.post('/:userId/:gameId/createplayer', function(req, res) {
+	console.log('user ' + req.params.userId +" requsted to create a player in game " + req.params.gameId);
+	var newPlayer = req.body;
+	newPlayer.gameId = req.params.gameId;
+
+	Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
+		if(err) throw err;
+		if(document != ""){
+			var playerId = Game.createPlayer(newPlayer, function(err,results){
+					if(err) throw err;
+					console.log(results);
+					res.json({id:playerId});
+				});
+		}else{
+			res.status(404).send('Game Not Found');  	
+		}
+	});
+  
+});
+
+
 router.put('/:userId/:gameId/updategame', function(req, res) {
 	console.log("user " + req.params.userId + " requsted to update the game " + req.params.gameId);
 
@@ -256,6 +234,7 @@ router.get('/:userId/:gameId/getgame', function(req, res) {
 	
 });
 
+
 router.delete('/:userId/:gameId', function(req, res) {
     var found = false;
     //database query to find game and delete it
@@ -273,17 +252,6 @@ router.delete('/:userId/:gameId', function(req, res) {
 	}
 	}); 
 });
-
-/*
-router.put('/:userId/:gameId/updategame',function(req,res){
-	var editGame = req.body;
-	editGame._id = editGame.id;
-	editGame.userId = req.params.userId;
-	delete editGame['id'];
-	Game.updateGame(editGame, function(err, document){
-		console.log(document);
-	});
-});*/
 
 passport.use(new JsonStrategy(
   	{	passwordProp: 'passwd'	},
