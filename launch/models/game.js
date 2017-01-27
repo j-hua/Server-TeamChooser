@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var ObjectId = require('mongodb').ObjectID;
 
 // User Schema
 var GameSchema = mongoose.Schema({
@@ -31,6 +32,11 @@ module.exports.createGame = function(newGame, callback){
 	newGame.save(callback);
 }
 
+module.exports.updateGame = function(editGame, callback){
+	//console.log(editGame);
+	Game.update({_id:new ObjectId(editGame._id)}, {$set: {gameName:editGame.gameName,
+		teamA:editGame.teamA,teamB:editGame.teamB,userId:editGame.userId}},callback);
+}
 
 /*
 module.exports.getGameById = function(id,callback){

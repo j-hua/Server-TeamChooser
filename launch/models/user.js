@@ -22,6 +22,7 @@ var UserSchema = mongoose.Schema({
 	}
 });
 
+
 //to access from outside of this file
 var User = module.exports = mongoose.model('User',UserSchema);
 
@@ -40,7 +41,7 @@ module.exports.getUserByUsername = function(username,callback){
 }
 
 module.exports.getUserById = function(id,callback){
-	User.findById(id,callback);
+	User.findOne({_id: id}, callback);
 }
 
 module.exports.comparePassword = function(candidatePassword,hash,callback){

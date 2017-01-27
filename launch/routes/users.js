@@ -5,6 +5,8 @@ var Game = require('../models/game');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var JsonStrategy = require('passport-json').Strategy;
+var ObjectId = require('mongodb').ObjectID;
+
 
 //Get HomePage
 router.get('/register',function(req,res){
@@ -159,7 +161,7 @@ passport.use(new LocalStrategy(
 */
 
 router.post('/:userId/creategame', function(req, res) {
-	console.log("HELLO");
+	console.log("require to create a game");
 
 	var reqGameName = req.body.gameName;
 //	var reqHasBODCount = req.body.hasBODCount;
@@ -207,14 +209,61 @@ router.post('/:userId/creategame', function(req, res) {
   
 });
 
+router.put('/:userId/:gameId/updategame', function(req, res) {
+	console.log("user " + req.params.userId + " requsted to update the game " + req.params.gameId);
+
+	var editGame = req.body;
+	editGame._id = req.params.gameId;
+	editGame.userId = req.params.userId;
+	delete editGame['id'];
+
+	//need to check if user exits 
+	//game exits and belong to the user
+	Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
+		if(err) throw err;
+		if(document != ""){
+			Game.updateGame(editGame, function(err,results){
+					if(err) throw err;
+					console.log(results);
+					res.status(200).send('Game updated!');
+				});
+		}else{
+			console.log(document);
+			res.status(404).send('Game Not Found');  	
+		}
+	});
+	
+});
+
+
+router.get('/:userId/:gameId/getgame', function(req, res) {
+	console.log("user " + req.params.userId + " requsted the game " + req.params.gameId);
+
+	//need to check if user exits 
+	//game exits and belong to the user
+	Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
+		if(err) throw err;
+		if(document != ""){
+			console.log("the following game has been found and returned to user");
+			console.log(document);		
+			res.json({game:document});
+		}else{
+			console.log("document empty");
+			console.log(document);
+			res.status(404).send('Game Not Found');  	
+		}
+	});
+	
+});
 
 router.delete('/:userId/:gameId', function(req, res) {
     var found = false;
     //database query to find game and delete it
-	Game.getGameById(req.params.gameId,function(err,document){
+	Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
 	if(err) throw err;
 	if(document){
-		console.log("Game exists, deleting it");
+		console.log("The following game has been deleted");
+		console.log(document);
 		Game.getGameByIdandRemove(req.params.gameId,function(err,document) {
 			if(err) throw err;
 		});
@@ -222,9 +271,19 @@ router.delete('/:userId/:gameId', function(req, res) {
 	}else{
 		res.status(404).send('No Game found!');	
 	}
-	});
-    
+	}); 
 });
+
+/*
+router.put('/:userId/:gameId/updategame',function(req,res){
+	var editGame = req.body;
+	editGame._id = editGame.id;
+	editGame.userId = req.params.userId;
+	delete editGame['id'];
+	Game.updateGame(editGame, function(err, document){
+		console.log(document);
+	});
+});*/
 
 passport.use(new JsonStrategy(
   	{	passwordProp: 'passwd'	},
