@@ -186,6 +186,13 @@ router.post('/:userId/:gameId/createplayer', function(req, res) {
   
 });
 
+router.get('/:userId/allgames',function(req,res){
+	var allGames = [];
+	Game.find({"userId":req.params.userId},function(err,doc){
+		allGames = doc;
+		res.status(200).json({allGames:allGames});
+	}); 
+});
 
 router.get('/:userId/:gameId/allplayers',function(req,res){
 	Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
