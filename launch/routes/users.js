@@ -86,37 +86,6 @@ router.post('/login',
 	}); 
   });
 
-/*
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-  	User.getUserByUsername(username,function(err,user){
-  		if(err) throw err;
-  		if(!user){
-  		//	res.sendStatus(404);
-  			console.log("Unknown username");
-  			return done(null,false,{message: 'Unknown User'});
-  		}else{
-  			console.log(user);
-  		}
-
-  		User.comparePassword(password,user.passwd,function(err,isMatch){
-  			if(err) throw err;
-  			if(isMatch){
-  				console.log("passwd OK!")
-  				return done(null,user);
-  				res.sendStatus(200);
-  			}else{
-  				console.log("Invalid passwd");
-  				return done(null,false,{message: 'Invalid password'});
-  				res.sendStatus(409);
-  			}
-  		});
-
-  	});
-
-  }));
-*/
-
 router.post('/:userId/creategame', function(req, res) {
 	console.log("require to create a game");
 
@@ -189,7 +158,16 @@ router.post('/:userId/:gameId/createplayer', function(req, res) {
 router.get('/:userId/allgames',function(req,res){
 	var allGames = [];
 	Game.find({"userId":req.params.userId},function(err,doc){
-		allGames = doc;
+		doc.forEach(function(item){
+			//mongoose quert results are not array of JS objects
+			//need to convert to JS object
+			var game = item.toObject();
+			game.id = game._id;
+			delete game._id;
+			allGames.push(game);
+		});
+		console.log(allGames);
+		
 		res.status(200).json({allGames:allGames});
 	}); 
 });
@@ -211,7 +189,7 @@ router.get('/:userId/:gameId/allplayers',function(req,res){
 router.put('/:userId/:gameId/updategame', function(req, res) {
 	console.log("user " + req.params.userId + " requsted to update the game " + req.params.gameId);
 
-	var editGame = req.body;
+	var editGame = req.body; //req.body is JS object!
 	editGame._id = req.params.gameId;
 	editGame.userId = req.params.userId;
 	delete editGame['id'];
