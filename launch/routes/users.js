@@ -81,7 +81,12 @@ router.post('/login',
     console.log("auth successful");
 	var allGames = [];
 	Game.find({"userId":req.user._id},function(err,doc){
-		allGames = doc;
+		doc.forEach(function(item){
+			var game = item.toObject();
+			game.id = game._id;
+			delete game._id;
+			allGames.push(game);
+		});
 		res.status(200).json({userId: req.user._id, allGames:allGames});
 	}); 
   });
