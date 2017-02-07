@@ -188,6 +188,10 @@ router.get('/:userId/:gameId/allplayers',function(req,res){
 	});
 });
 
+router.post('/:userId/:gameId/match', function(req, res) {
+    console.log(req)
+    res.status(200).send('Ok');  
+});
 
 router.put('/:userId/:gameId/updategame', function(req, res) {
 	console.log("user " + req.params.userId + " requsted to update the game " + req.params.gameId);
