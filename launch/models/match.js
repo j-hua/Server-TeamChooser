@@ -20,4 +20,4 @@ var MatchSchema = mongoose.Schema({
 });
 
 //to access from outside of this file
-var Match = module.exports = mongoose.model('Match',GameSchema);
+var Match = module.exports = mongoose.model('Match',MatchSchema);
