@@ -180,12 +180,7 @@ router.get('/:userId/:gameId/allplayers',function(req,res){
 	Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
 		if(err) throw err;
 		if(document != ""){
-			console.log(document);
-			var allPlayers = [];
-			document.forEach(function(item){
-				var player = item.toObject();
-				allPlayers.push(player);
-			});
+			var allPlayers = document[0].toObject().players;
 			res.json({allPlayers:allPlayers});
 		}else{
 			res.status(404).send('Game Not Found');  	
