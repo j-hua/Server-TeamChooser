@@ -3,16 +3,9 @@ var router = express.Router();
 var Match = require('../models/match');
 
 
-router.post('/recovery', function(req, res){
-
-	var obj = req.body;
-//	var obj = JSON.parse(array);
-	
-	req.checkBody('email', 'email cannot be empty').notEmpty();
-	console.log(obj);
-
-	res.sendStatus(200);
-
+router.post('/:userId/:gameId/match', function(req, res) {
+    console.log(req)
+    res.status(200).send('Ok');
 });
 
 module.exports = router;
