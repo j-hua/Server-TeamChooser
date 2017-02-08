@@ -5,6 +5,7 @@
 var express = require('express');
 var Game = require('../models/game');
 var ObjectId = require('mongodb').ObjectID;
+var router = express.Router();
 
 router.post('/:userId/creategame', function(req, res) {
     console.log("require to create a game");
@@ -168,3 +169,5 @@ router.delete('/:userId/:gameId', function(req, res) {
         }
     });
 });
+
+module.exports = router;

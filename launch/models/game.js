@@ -60,6 +60,15 @@ module.exports.getGameByIdandRemove = function(id,callback){
 	Game.findByIdAndRemove(id,callback);
 }
 
+
+module.exports.getAllPlaters = function(gameId){
+    Game.find({"_id":new ObjectId(gameId)},function(err,document){
+        if(err) throw err;
+        else{
+            return document[0].toObject().players;
+        }
+    });
+}
 /*
 module.exports.getAllGamesByUserID = function(id,callback){
 	var query = {teamA.id:id,teamB.id:id};
