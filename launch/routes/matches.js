@@ -18,9 +18,9 @@ router.post('/:userId/:gameId/match', function(req, res) {
     });
 
     var gameId = req.params.gameId;
-    Match.createMatch(newMatch,function (req,res) {
+    Match.createMatch(newMatch,function (err,newMatch) {
         console.log("new match created")
-
+        res.json({id:newMatch._id});
         //calculate ratings for each players
         Match.find({"gameId":gameId},function(err,document){
           if(err) throw err;
