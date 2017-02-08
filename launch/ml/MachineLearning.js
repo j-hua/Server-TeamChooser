@@ -103,7 +103,7 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
             for (var j = 0; j < curr_instance.TeamA.length; j++) {
                 PID = curr_instance.TeamA[j];
                 if (PlayerRatings.hasOwnProperty(PID) === false) {
-                    PlayerRatings[PID] = { rating: 5 };
+                    PlayerRatings[PID] = { rating: 3 };
                 }
                 if (rating_table.hasOwnProperty(PID) === false) {
                     rating_table[PID] = { sum: 0, counter: 0 };
@@ -116,7 +116,7 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
             for (var k = 0; k < curr_instance.TeamB.length; k++) {
                 PID = curr_instance.TeamB[k];
                 if (PlayerRatings.hasOwnProperty(PID) === false) {
-                    PlayerRatings[PID] = { rating: 5 };
+                    PlayerRatings[PID] = { rating: 3 };
                 }
                 if (rating_table.hasOwnProperty(PID) === false) {
                     rating_table[PID] = { sum: 0, counter: 0 };
