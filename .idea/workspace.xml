@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd4b5a6-0927-4885-931c-f3674d4f0633" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/launch/routes/matches.js" afterPath="$PROJECT_DIR$/launch/routes/matches.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/launch/routes/games.js" afterPath="$PROJECT_DIR$/launch/routes/games.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,11 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="games.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="games.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/launch/routes/games.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="49" column="53" lean-forward="false" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="53" />
+            <state relative-caret-position="105">
+              <caret line="154" column="42" lean-forward="false" selection-start-line="154" selection-start-column="42" selection-end-line="154" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -110,7 +110,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="matches.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="matches.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/launch/routes/matches.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="87">
@@ -153,7 +153,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/launch/package.json" />
-        <option value="$PROJECT_DIR$/launch/routes/games.js" />
         <option value="$PROJECT_DIR$/launch/app.js" />
         <option value="$PROJECT_DIR$/launch/models/match.js" />
         <option value="$PROJECT_DIR$/launch/ml/MachineLearning.js" />
@@ -161,6 +160,7 @@
         <option value="$PROJECT_DIR$/launch/routes/users.js" />
         <option value="$PROJECT_DIR$/launch/models/game.js" />
         <option value="$PROJECT_DIR$/launch/routes/matches.js" />
+        <option value="$PROJECT_DIR$/launch/routes/games.js" />
       </list>
     </option>
   </component>
@@ -399,12 +399,12 @@
       <option name="presentableId" value="Default" />
       <updated>1486355753769</updated>
       <workItem from="1486442440822" duration="17276000" />
-      <workItem from="1486521021676" duration="7686000" />
+      <workItem from="1486521021676" duration="8099000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24962000" />
+    <option name="totallyTimeSpent" value="25375000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="0" />
@@ -599,14 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/launch/routes/games.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="49" column="53" lean-forward="false" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/launch/routes/users.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
@@ -619,6 +611,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
           <caret line="22" column="35" lean-forward="false" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/launch/routes/games.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="154" column="42" lean-forward="false" selection-start-line="154" selection-start-column="42" selection-end-line="154" selection-end-column="42" />
           <folding />
         </state>
       </provider>

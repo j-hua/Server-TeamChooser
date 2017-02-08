@@ -152,7 +152,7 @@ router.get('/:userId/:gameId/getgame', function(req, res) {
 });
 
 
-router.delete('/:userId/:gameId', function(req, res) {
+router.delete('/:userId/:gameId/deletegame', function(req, res) {
     var found = false;
     //database query to find game and delete it
     Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
