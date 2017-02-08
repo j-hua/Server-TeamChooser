@@ -38,7 +38,6 @@ router.post('/signup',function(req,res){
 			passwd: reqPasswd
 		});
 
-
 		User.getUserByUsername(reqUsername,function(err,document){
 			if(err) throw err;
 			if(document){

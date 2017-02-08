@@ -34,7 +34,18 @@ router.post('/:userId/:gameId/match', function(req, res) {
                   if(err) throw err;
                   if(document != ""){
                       var allPlayers = document[0].toObject().players;
-                      ml.invokeML(allPlayers,allMatches);
+                      var ratings = ml.invokeML(allPlayers,allMatches);
+                        //update player ratings
+                      ratings.forEach(function (player) {
+                          console.log(player.playerId);
+                          console.log(player.rating);
+                         /* Game.updatePlayerRating(gameId,player.playerId,player.rating,function(){
+//                              console.log("rating updated");
+
+                          });*/
+                      });
+                /*      Game.update({_id:gameId,players.playerId:)}, {$set: {$set:playerseditGame.gameName,
+                              teamA:editGame.teamA,teamB:editGame.teamB,userId:editGame.userId}},callback);*/
                   }
               });
 

@@ -36,6 +36,13 @@ module.exports.updateGame = function(editGame, callback){
 		teamA:editGame.teamA,teamB:editGame.teamB,userId:editGame.userId}},callback);
 }
 
+module.exports.updatePlayerRating = function (gameId,playerId,playerRating, callback) {
+    Game.find({'players.playerId':playerId},{"players.$":1},function (err,doc) {
+        console.log(doc[0].players);
+    })
+    Game.update({_id:gameId,'players.playerId':playerId},{$set:{rating:playerRating}},callback);
+}
+
 module.exports.createPlayer = function(playerBuff, callback){
 	var pId = new ObjectId();
 	Game.update({_id:new ObjectId(playerBuff.gameId)}, {$push: {players:{
