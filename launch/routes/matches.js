@@ -34,6 +34,10 @@ router.post('/:userId/:gameId/match', function(req, res) {
                   if(err) throw err;
                   if(document != ""){
                       var allPlayers = document[0].toObject().players;
+                      console.log("all players:")
+                      console.log(allPlayers);
+                      console.log("all matches:")
+                      console.log(allMatches);
                       var ratings = ml.invokeML(allPlayers,allMatches);
                         //update player ratings
                       ratings.forEach(function (player) {
