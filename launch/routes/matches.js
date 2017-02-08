@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var Match = require('../models/match');
+var ml = require('../ml/ml.js');
+var Game = require('../models/game');
+var ObjectId = require('mongodb').ObjectID;
 
 
 router.post('/:userId/:gameId/match', function(req, res) {
@@ -14,17 +17,27 @@ router.post('/:userId/:gameId/match', function(req, res) {
         gameId: req.params.gameId
     });
 
-    Match.createMatch(newMatch,function (res,req) {
-        console.log("new match created");
+    var gameId = req.params.gameId;
+    Match.createMatch(newMatch,function (req,res) {
+        console.log("new match created")
 
         //calculate ratings for each players
         Match.find({"gameId":gameId},function(err,document){
           if(err) throw err;
           else{
-              var allmatches = [];
+              var allMatches = [];
               document.forEach(function (item) {
-                  allmatches.push(item.toObject());
+                  allMatches.push(item.toObject());
               });
+
+              Game.find({"_id":new ObjectId(gameId)},function(err,document){
+                  if(err) throw err;
+                  if(document != ""){
+                      var allPlayers = document[0].toObject().players;
+                      ml.invokeML(allPlayers,allMatches);
+                  }
+              });
+
           }
         });
     });

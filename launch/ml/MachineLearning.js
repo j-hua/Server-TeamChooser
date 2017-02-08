@@ -1,7 +1,7 @@
 "use strict";
 
 var threshold = 100;
-
+/*
 class GameInstance {
     constructor(gameID, teamA, teamB, scoreA, scoreB) {
         this.GameID = gameID;
@@ -10,7 +10,7 @@ class GameInstance {
         this.ScoreA = scoreA;
         this.ScoreB = scoreB;
     }
-}
+}*/
 
 function ScorePredictor(teamA, teamB) {
     var sumA = teamA.reduce(function (a, b) {

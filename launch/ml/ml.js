@@ -1,20 +1,7 @@
 const http = require('http');
 const util = require('util')
 var ml=require('./MachineLearning.js');
-http.createServer((req, res) => {
 
-    // 1. Tell the browser everything is OK (Status code 200), and the data is in plain text.
-    res.writeHead(200, {
-        'Content-Type': 'text/plain'
-    });
-    console.log(`Hello, yo`);
-    // 2. Write the announced text to the body of the page
-    res.write('Hello, World!\n');
-
-    // 3. Tell the server that all of the response headers and body have been sent
-    res.end();
-
-}).listen(3001);
 
 
 
@@ -168,6 +155,7 @@ for(var n in result){
     count++;
 
 }
+    console.log("result_arr\n"+util.inspect(result_arr, false, null));
 return result_arr;
     
 }    
