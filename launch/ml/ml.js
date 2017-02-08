@@ -126,7 +126,7 @@ for (var i = 0; i<inputallmatch.length;i++){
         teamA_array[j]=inputallmatch[i].teamA.players[j].playerId;
     }
     for (var k = 0; k<inputallmatch[i].teamB.players.length;k++){
-        teamB_array[k]=inputallmatch[k].teamB.players[k].playerId;
+        teamB_array[k]=inputallmatch[i].teamB.players[k].playerId;
     }
 
     each_match.TeamA=teamA_array;
