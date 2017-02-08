@@ -144,7 +144,7 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
             }
         }
         var error_per_game = ErrorPerGame(game_instances, PlayerRatings);
-        if (error_per_game <= optimal_set.min_error) {
+        if (error_per_game < optimal_set.min_error) {
             optimal_set.min_error = error_per_game;
             optimal_set.player_ratings = CloneOrUpdate(PlayerRatings);
         }

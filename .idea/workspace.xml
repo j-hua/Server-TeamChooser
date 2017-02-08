@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd4b5a6-0927-4885-931c-f3674d4f0633" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/launch/routes/games.js" afterPath="$PROJECT_DIR$/launch/routes/games.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/launch/ml/MachineLearning.js" afterPath="$PROJECT_DIR$/launch/ml/MachineLearning.js" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MachineLearning.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MachineLearning.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/launch/ml/MachineLearning.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2554">
-              <caret line="6" column="29" lean-forward="true" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+            <state relative-caret-position="225">
+              <caret line="146" column="28" lean-forward="false" selection-start-line="146" selection-start-column="28" selection-end-line="146" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -90,7 +90,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="games.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="games.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/launch/routes/games.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -139,6 +139,7 @@
       <find>p</find>
       <find>allp</find>
       <find>200</find>
+      <find>delete</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -155,12 +156,12 @@
         <option value="$PROJECT_DIR$/launch/package.json" />
         <option value="$PROJECT_DIR$/launch/app.js" />
         <option value="$PROJECT_DIR$/launch/models/match.js" />
-        <option value="$PROJECT_DIR$/launch/ml/MachineLearning.js" />
         <option value="$PROJECT_DIR$/launch/ml/ml.js" />
         <option value="$PROJECT_DIR$/launch/routes/users.js" />
         <option value="$PROJECT_DIR$/launch/models/game.js" />
         <option value="$PROJECT_DIR$/launch/routes/matches.js" />
         <option value="$PROJECT_DIR$/launch/routes/games.js" />
+        <option value="$PROJECT_DIR$/launch/ml/MachineLearning.js" />
       </list>
     </option>
   </component>
@@ -399,12 +400,12 @@
       <option name="presentableId" value="Default" />
       <updated>1486355753769</updated>
       <workItem from="1486442440822" duration="17276000" />
-      <workItem from="1486521021676" duration="9901000" />
+      <workItem from="1486521021676" duration="10666000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27177000" />
+    <option name="totallyTimeSpent" value="27942000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="0" />
@@ -565,14 +566,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/launch/routes/ml.js" />
-    <entry file="file://$PROJECT_DIR$/launch/ml/MachineLearning.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2554">
-          <caret line="6" column="29" lean-forward="true" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/launch/ml/ml.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="417">
@@ -619,6 +612,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="143" column="40" lean-forward="false" selection-start-line="143" selection-start-column="40" selection-end-line="143" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/launch/ml/MachineLearning.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="146" column="28" lean-forward="false" selection-start-line="146" selection-start-column="28" selection-end-line="146" selection-end-column="28" />
           <folding />
         </state>
       </provider>
