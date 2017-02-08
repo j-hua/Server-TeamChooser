@@ -40,7 +40,7 @@ function ScorePredictor(teamA, teamB) {
 
 function CalculateAdjustment(teamA, teamB, score_diff_a) {
     var score_diff_c = ScorePredictor(teamA, teamB);
-    var adjustment = (score_diff_a - score_diff_c) / 19;
+    var adjustment = (score_diff_a - score_diff_c) / 7;
     return adjustment;
 }
 
@@ -103,7 +103,7 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
             for (var j = 0; j < curr_instance.TeamA.length; j++) {
                 PID = curr_instance.TeamA[j];
                 if (PlayerRatings.hasOwnProperty(PID) === false) {
-                    PlayerRatings[PID] = { rating: 9 };
+                    PlayerRatings[PID] = { rating: 5 };
                 }
                 if (rating_table.hasOwnProperty(PID) === false) {
                     rating_table[PID] = { sum: 0, counter: 0 };
@@ -116,30 +116,13 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
             for (var k = 0; k < curr_instance.TeamB.length; k++) {
                 PID = curr_instance.TeamB[k];
                 if (PlayerRatings.hasOwnProperty(PID) === false) {
-                    PlayerRatings[PID] = { rating: 9 };
+                    PlayerRatings[PID] = { rating: 5 };
                 }
                 if (rating_table.hasOwnProperty(PID) === false) {
                     rating_table[PID] = { sum: 0, counter: 0 };
                 }
                 teamB.push(PlayerRatings[PID].rating);
             }
-//            console.log("(" + iteration + ") teamB: " + teamB);
-            
-//            var output = "(" + iteration + ") PlayerRatings:";
-//          for (var aaa in PlayerRatings) {
-//                if (PlayerRatings.hasOwnProperty(aaa)) {
-//                    output += aaa + " " + PlayerRatings[aaa].rating + ", ";
-//                }
-//            }
-//            console.log(output);
-            
-//            var output1 = "(" + iteration + ") RatingTable:";
-//          for (var bbb in rating_table) {
-//                if (rating_table.hasOwnProperty(bbb)) {
-//                    output1 += bbb + " " + rating_table[bbb].sum + " " + rating_table[bbb].counter + ", ";
-//                }
-//            }
-//            console.log(output1);
 
             var adj = CalculateAdjustment(teamA, teamB, (curr_instance.ScoreA - curr_instance.ScoreB));
             for (var j = 0; j < curr_instance.TeamA.length; j++) {
@@ -156,7 +139,8 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
 
         for (PID in rating_table) {
             if (rating_table.hasOwnProperty(PID)) {
-                PlayerRatings[PID].rating = Math.floor(rating_table[PID].sum / rating_table[PID].counter);
+				var tmp_rating = rating_table[PID].sum / rating_table[PID].counter;
+                PlayerRatings[PID].rating = Math.round(tmp_rating * 10) / 10;
             }
         }
         var error_per_game = ErrorPerGame(game_instances, PlayerRatings);
