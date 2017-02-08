@@ -141,10 +141,10 @@ router.get('/:userId/:gameId/getgame', function(req, res) {
         if(document != ""){
             console.log("the following game has been found and returned to user");
             console.log(document);
-            document.id = document._id;
+            document[0].id = document._id;
             //editGame.userId = req.params.userId;
-            delete document['_id'];
-            res.json({game:document});
+            delete document[0]._id;
+            res.json({game:document[0]});
         }else{
             console.log("document empty");
             console.log(document);
