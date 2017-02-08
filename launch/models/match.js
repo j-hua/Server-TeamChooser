@@ -6,18 +6,36 @@ var ObjectId = require('mongodb').ObjectID;
 
 // User Schema
 var MatchSchema = mongoose.Schema({
-    players:
-        [{
-            playerId: String,
-            name:String,
-            rating:Number,
-            score:Number
-            //team?
-        }],
+    teamA:{
+        players:
+            [{
+                playerId: String,
+                name:String,
+                rating:Number,
+            }],
+        score:{type:Number}
+    },
+    teamB:{
+        players:
+            [{
+                playerId: String,
+                name:String,
+                rating:Number,
+            }],
+        score:{type:Number}
+    },
     gameId:{
         type:String
+    },
+    userId:{
+        type: String
     }
 });
 
 //to access from outside of this file
 var Match = module.exports = mongoose.model('Match',MatchSchema);
+
+module.exports.createMatch = function(newMatch, callback){
+    newMatch.save(callback);
+}
+
