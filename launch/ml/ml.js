@@ -8,7 +8,7 @@ var ml=require('./MachineLearning.js');
 module.exports.invokeML= function invokeML(inputallplayer,inputallmatch){
 /*
 var inputallplayer={
-  "allPlayers": [
+   [
     {
       "_id": "588aca612bafce21ae65905d",
       "playerId": "Max14",
@@ -107,9 +107,9 @@ var ratings_prev={};//all players + rating, to be sent to machine learning algor
 var game_instances=[];//this is array of all match instances in a game
 
 //parse allplayers to format fo rating_prev
-for (var i = 0; i <inputallplayer.allPlayers.length; i++) {
-    var playerId=inputallplayer.allPlayers[i].playerId;
-    var each_rating={rating:inputallplayer.allPlayers[i].rating};
+for (var i = 0; i <inputallplayer.length; i++) {
+    var playerId=inputallplayer[i].playerId;
+    var each_rating={rating:inputallplayer[i].rating};
     ratings_prev[playerId]=each_rating;
 
 }
