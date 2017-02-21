@@ -75,6 +75,62 @@ function ErrorPerGame(game_instances, player_rating) {
     return total_err / i;
 }
 
+function Rescale(old_ratings)
+{
+    // 1: Rescale
+    var tmp1 = [];
+    var max1 = Math.max.apply(null, old_ratings);
+    var min1 = Math.min.apply(null, old_ratings);
+    var diff1 = max1 - min1;
+    var i;
+    if (diff1 > 10) {
+        for (i = 0; i < old_ratings.length; i++) {
+            tmp1.push(old_ratings[i] * 10 / diff1);
+        }
+    }
+    else {
+        tmp1 = old_ratings;
+    }
+
+    // 2: Re-centre to 5
+    var tmp2 = [];
+    var sum = tmp1.reduce(function (a, b) {
+        return a + b;
+    }, 0);
+    var avg = sum / tmp1.length;
+    var diff2 = avg - 5;
+    var j;
+    for (j = 0; j < tmp1.length; j++) {
+        tmp2.push(tmp1[j] - diff2);
+    }
+
+    // 3: shift to fit within 0 to 10
+    var new_ratings = [];
+    var max3 = Math.max.apply(null, tmp2);
+    var min3 = Math.min.apply(null, tmp2);
+    var diff3;
+    var k;
+    if (max3 > 10) {
+        diff3 = max3 - 10;
+        for (k = 0; k < tmp2.length; k++) {
+            new_ratings.push(Math.round((tmp2[k] - diff3) * 10) / 10);
+        }
+    }
+    else if (min3 < 0) {
+        diff3 = 0 - min3;
+        for (k = 0; k < tmp2.length; k++) {
+            new_ratings.push(Math.round((tmp2[k] + diff3) * 10) / 10);
+        }
+    }
+    else {
+        for (k = 0; k < tmp2.length; k++) {
+            new_ratings.push(Math.round(tmp2[k] * 10) / 10);
+        }
+    }
+
+    return new_ratings;
+}
+
 function CloneOrUpdate(sourceObj) {
     var target = {};
     for (var PID in sourceObj) {
@@ -94,6 +150,8 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
     var PlayerRatings = CloneOrUpdate(ratings_prev);
     var PlayerRatings_prev = {};
     var PID;
+
+	
     while (keep_running) {
         var rating_table = {};
         for (var i = 0; i < game_instances.length; i++) {
@@ -110,7 +168,6 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
                 }
                 teamA.push(PlayerRatings[PID].rating);
             }
-//            console.log("(" + iteration + ") teamA: " + teamA);
 
             var teamB = [];
             for (var k = 0; k < curr_instance.TeamB.length; k++) {
@@ -136,11 +193,19 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
                 rating_table[PID].counter += 1;
             }
         }
-
+        var arr = [];
         for (PID in rating_table) {
             if (rating_table.hasOwnProperty(PID)) {
-				var tmp_rating = rating_table[PID].sum / rating_table[PID].counter;
-                PlayerRatings[PID].rating = Math.round(tmp_rating * 10) / 10;
+                var tmp_rating = rating_table[PID].sum / rating_table[PID].counter;
+                arr.push(tmp_rating);
+            }
+        }
+        var new_arr = Rescale(arr);
+        var index = 0;
+        for (PID in rating_table) {
+            if (rating_table.hasOwnProperty(PID)) {
+                PlayerRatings[PID].rating = new_arr[index];
+                index++;
             }
         }
         var error_per_game = ErrorPerGame(game_instances, PlayerRatings);
