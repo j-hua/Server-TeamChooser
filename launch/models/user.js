@@ -1,3 +1,6 @@
+/**
+ * Created by JHUA on 2016-11-12.
+ */
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 

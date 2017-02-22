@@ -21,7 +21,6 @@ mongoose.connect('mongodb://localhost/hockey',function(err){
 
 var db = mongoose.connection;
 
-var routes = require('./routes/index');
 var users = require('./routes/users');
 var matches = require('./routes/matches');
 var games = require('./routes/games');
@@ -83,8 +82,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-app.use('/',routes);
 app.use('/',users);
 app.use('/',matches);
 app.use('/',games);

@@ -7,22 +7,17 @@ var Game = require('../models/game');
 var ObjectId = require('mongodb').ObjectID;
 var router = express.Router();
 
+//create a game
 router.post('/:userId/creategame', function(req, res) {
     console.log("require to create a game");
 
     var reqGameName = req.body.gameName;
-//	var reqHasBODCount = req.body.hasBODCount;
-//	var reqHasBODRatings = req.body.hasBODRatings;
-//	var reqHasSuperOptimizer = req.body.hasSuperOptimizer;
     var reqTeamA = req.body.teamA;
     var reqTeamB = req.body.teamB;
     var reqUserId = req.params.userId;
-//	var reqPlayers = req.body.players;
+
     //add game to the database with these attributes
     req.checkBody('gameName', 'game name is required').notEmpty();
-//	req.checkBody('hasBODCount', 'hasBODCount is required').notEmpty();
-//	req.checkBody('hasBODRatings', 'hasBODRatings is required').notEmpty();
-//	req.checkBody('hasSuperOptimizer', 'hasSuperOptimizer is not valid').notEmpty();
     req.checkBody('teamA', 'teamA is required').notEmpty();
     req.checkBody('teamB', 'teamB is required').notEmpty();
 
@@ -38,14 +33,12 @@ router.post('/:userId/creategame', function(req, res) {
 
         var newGame = new Game({
             gameName: reqGameName,
-            //	hasBODCount: reqHasBODCount,
-            //	hasBODRatings: reqHasBODRatings,
-            //	hasSuperOptimizer: reqHasSuperOptimizer,
             teamA: reqTeamA,
             teamB: reqTeamB,
             userId: reqUserId,
             players: []
         });
+
         //write into database
         Game.createGame(newGame, function(err,newGame){
             if(err) throw err;
@@ -56,6 +49,7 @@ router.post('/:userId/creategame', function(req, res) {
 
 });
 
+//create a player
 router.post('/:userId/:gameId/createplayer', function(req, res) {
     console.log('user ' + req.params.userId +" requsted to create a player in game " + req.params.gameId);
     var newPlayer = req.body;
@@ -75,6 +69,7 @@ router.post('/:userId/:gameId/createplayer', function(req, res) {
     });
 });
 
+//get all games that created by a user
 router.get('/:userId/allgames',function(req,res){
     var allGames = [];
     Game.find({"userId":req.params.userId},function(err,doc){
@@ -92,6 +87,7 @@ router.get('/:userId/allgames',function(req,res){
     });
 });
 
+//get all players in a game
 router.get('/:userId/:gameId/allplayers',function(req,res){
     Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
         if(err) throw err;
@@ -104,6 +100,7 @@ router.get('/:userId/:gameId/allplayers',function(req,res){
     });
 });
 
+//update a game
 router.put('/:userId/:gameId/updategame', function(req, res) {
     console.log("user " + req.params.userId + " requsted to update the game " + req.params.gameId);
 
@@ -131,6 +128,7 @@ router.put('/:userId/:gameId/updategame', function(req, res) {
 });
 
 
+//get a game
 router.get('/:userId/:gameId/getgame', function(req, res) {
     console.log("user " + req.params.userId + " requsted the game " + req.params.gameId);
 
@@ -155,6 +153,7 @@ router.get('/:userId/:gameId/getgame', function(req, res) {
 });
 
 
+//delete a game
 router.delete('/:userId/:gameId/deletegame', function(req, res) {
     var found = false;
     //database query to find game and delete it
