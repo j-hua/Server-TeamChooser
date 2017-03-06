@@ -1,7 +1,10 @@
+/**
+ * Created by JHUA on 2016-11-12.
+ */
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 
-// User Schema
+// Game Schema
 var GameSchema = mongoose.Schema({
 	gameName:{
 		type: String,
@@ -37,10 +40,7 @@ module.exports.updateGame = function(editGame, callback){
 }
 
 module.exports.updatePlayerRating = function (gameId,playerId,playerRating, callback) {
-    Game.find({'players.playerId':playerId},{"players.$":1},function (err,doc) {
-        console.log(doc[0].players);
-    })
-    Game.update({_id:gameId,'players.playerId':playerId},{$set:{rating:playerRating}},callback);
+    Game.update({_id:new ObjectId(gameId),"players.playerId":playerId},{$set:{"players.$.rating":playerRating}},callback);
 }
 
 module.exports.createPlayer = function(playerBuff, callback){
@@ -60,7 +60,7 @@ module.exports.getGameById = function(id,callback){
 }*/
 
 module.exports.getGameById = function(id,callback){
-	Game.findById(id,callback);
+	Game.find({"_id":new ObjectId(id)},callback);
 }
 
 module.exports.getGameByIdandRemove = function(id,callback){
