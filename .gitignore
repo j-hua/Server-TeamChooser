@@ -1,2 +1,4 @@
 /launch/node_modules/
 .ssh/
+.key.pem
+
