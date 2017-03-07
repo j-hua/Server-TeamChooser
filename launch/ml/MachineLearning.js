@@ -46,6 +46,7 @@ function CalculateAdjustment(teamA, teamB, score_diff_a) {
 
 function ErrorPerGame(game_instances, player_rating) {
     var total_err = 0;
+    var total_diff = 0;
     var curr_instance;
     var PID;
     for (var i = 0; i < game_instances.length; i++) {
@@ -63,6 +64,7 @@ function ErrorPerGame(game_instances, player_rating) {
         var SD_act = Math.abs(curr_instance.ScoreA - curr_instance.ScoreB);
         var SD_cal = Math.abs(ScorePredictor(teamA, teamB));
         total_err += Math.abs(SD_act - SD_cal);
+        total_diff += SD_act;
     }
     var output = "Total Error:" + total_err + "\nPlayerRatings:";
     for (var aaa in player_rating) {
@@ -72,7 +74,7 @@ function ErrorPerGame(game_instances, player_rating) {
     }
 
     console.log(output);
-    return total_err / i;
+    return [total_err / i, Math.round((total_err / total_diff) * 100) / 100];
 }
 
 function Rescale(old_ratings)
@@ -161,7 +163,7 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
             for (var j = 0; j < curr_instance.TeamA.length; j++) {
                 PID = curr_instance.TeamA[j];
                 if (PlayerRatings.hasOwnProperty(PID) === false) {
-                    PlayerRatings[PID] = { rating: 3 };
+                    PlayerRatings[PID] = { rating: 5 };
                 }
                 if (rating_table.hasOwnProperty(PID) === false) {
                     rating_table[PID] = { sum: 0, counter: 0 };
@@ -173,7 +175,7 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
             for (var k = 0; k < curr_instance.TeamB.length; k++) {
                 PID = curr_instance.TeamB[k];
                 if (PlayerRatings.hasOwnProperty(PID) === false) {
-                    PlayerRatings[PID] = { rating: 3 };
+                    PlayerRatings[PID] = { rating: 5 };
                 }
                 if (rating_table.hasOwnProperty(PID) === false) {
                     rating_table[PID] = { sum: 0, counter: 0 };
@@ -208,8 +210,10 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
                 index++;
             }
         }
-        var error_per_game = ErrorPerGame(game_instances, PlayerRatings);
-        if (error_per_game < optimal_set.min_error) {
+        var result = ErrorPerGame(game_instances, PlayerRatings);
+        var error_per_game = result[0];
+        var confidence = result[1];
+        if (error_per_game <= optimal_set.min_error) {
             optimal_set.min_error = error_per_game;
             optimal_set.player_ratings = CloneOrUpdate(PlayerRatings);
         }
@@ -240,7 +244,7 @@ module.exports.InferRatings = function InferRatings(ratings_prev, game_instances
         PlayerRatings_prev = CloneOrUpdate(PlayerRatings);
     }
     
-    return optimal_set.player_ratings;
+    return [confidence, optimal_set.player_ratings];
 }
 
 
