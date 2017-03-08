@@ -6,8 +6,11 @@ var ml=require('./MachineLearning.js');
 
 
 module.exports.invokeML= function invokeML(inputallplayer,inputallmatch){
-/*
-var inputallplayer={
+/* testing 
+function invokeML(){
+
+
+var inputallplayer=
    [
     {
       "_id": "588aca612bafce21ae65905d",
@@ -34,7 +37,7 @@ var inputallplayer={
       "name": "YEEE"
     }
   ]
-};
+;
 
 var inputallmatch=
     [
@@ -98,9 +101,8 @@ var inputallmatch=
     }
     ];
 
-
-
 */
+
 //var inputallplayerString=JSON.parse(inputallplayer);
 
 var ratings_prev={};//all players + rating, to be sent to machine learning algorithm
@@ -143,22 +145,36 @@ for (var i = 0; i<inputallmatch.length;i++){
 //console.log("game_instances\n"+util.inspect(game_instances, false, null));
 
 var result=ml.InferRatings(ratings_prev,game_instances);
+//console.log("result\n"+util.inspect(result, false, null));
+//console.log("result[0] is "+result[0]);
+//console.log("result[1] is "+util.inspect(result[1], false, null));
 var result_arr=[];
 var count=0;
-for(var n in result){
+for(var n in result[1]){
     var each_rating={};
   //  console.log("each_rating"+util.inspect(n, false, null));
     each_rating.playerId=n;
-    each_rating.rating=result[n].rating;
+    each_rating.rating=result[1][n].rating;
 
     result_arr[count]=each_rating;
     count++;
 
 }
-    console.log("result_arr\n"+util.inspect(result_arr, false, null));
-return result_arr;
-    
+  //  console.log("result_arr\n"+util.inspect(result_arr, false, null));
+   // console.log("empty aray\n"+util.inspect([], false, null));
+if (result[0]<0.3) { 
+  console.log("lower than 0.3, I am confident");  
+  return result_arr;
+
+ } 
+else{
+  console.log("lower than 0.3, I am confident");
+  return [];
+}
 }    
+
+//for testing
+//invokeML();
 
   
 //console.log("result \n"+util.inspect(result, false, null));
