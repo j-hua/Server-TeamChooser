@@ -69,6 +69,32 @@ router.post('/:userId/:gameId/createplayer', function(req, res) {
     });
 });
 
+//edit a player
+router.put('/:userId/:gameId/updateallplayers', function(req, res) {
+    
+    console.log('user ' + req.params.userId +" requsted to update all players in game " + req.params.gameId);
+    var allPlayers = req.body.allPlayers;
+    console.log(req.body)
+    Game.find({"_id":new ObjectId(req.params.gameId)},function(err,document){
+        if(err) throw err;
+        if(document != ""){
+
+
+          allPlayers.forEach(function (player) {
+                                console.log(player.playerId);
+                                console.log(player.rating);
+                                 Game.updatePlayerRating(req.params.gameId,player.playerId,player.rating,function(){
+                                 //                              console.log("rating updated");
+                                 });
+                            });
+        }else{
+            res.status(404).send('Game Not Found');
+        }
+
+        res.status(200).send('Ok');
+    });
+});
+
 //get all games that created by a user
 router.get('/:userId/allgames',function(req,res){
     var allGames = [];

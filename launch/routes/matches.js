@@ -23,7 +23,6 @@ router.post('/:userId/:gameId/match', function(req, res) {
         else{
 
             console.log("new match created")
-            res.status(200).send('Ok');
 
             //preparing to update rating for all players
             Match.find({"gameId":gameId},function(err,document){
@@ -44,14 +43,8 @@ router.post('/:userId/:gameId/match', function(req, res) {
                             console.log(allMatches);*/
                             var ratings = ml.invokeML(allPlayers,allMatches);
                             //update player ratings
-                            ratings.forEach(function (player) {
-                                console.log(player.playerId);
-                                console.log(player.rating);
-                                 Game.updatePlayerRating(gameId,player.playerId,player.rating,function(){
-                                 //                              console.log("rating updated");
-                                 });
-                            });
-
+                            res.status(200).json(ratings);
+                            console.log(ratings);
                         }
                     });
 

@@ -161,16 +161,9 @@ for(var n in result[1]){
 
 }
   //  console.log("result_arr\n"+util.inspect(result_arr, false, null));
-   // console.log("empty aray\n"+util.inspect([], false, null));
-if (result[0]<0.3) { 
   console.log("lower than 0.3, I am confident");  
   return result_arr;
 
- } 
-else{
-  console.log("lower than 0.3, I am confident");
-  return [];
-}
 }    
 
 //for testing
