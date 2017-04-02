@@ -139,10 +139,18 @@ router.get('/:userId/:gameId/getgame', function(req, res) {
         if(document != ""){
             console.log("the following game has been found and returned to user");
             console.log(document);
-            document[0].id = document[0]._id;
+           // document[0].id = document[0]._id;
             //editGame.userId = req.params.userId;
-            delete document[0]._id;
-            res.json({game:document[0]});
+            //delete document[0]._id;
+            var newObj = {
+                id: document[0]._id,
+                gameName: document[0].gameName,
+                userId: document[0].userId,
+                players: document[0].players,
+                teamB: document[0].teamB,
+                teamA: document[0].teamA
+            };
+            res.json({game:newObj});
         }else{
             console.log("document empty");
             console.log(document);
@@ -171,5 +179,42 @@ router.delete('/:userId/:gameId/deletegame', function(req, res) {
         }
     });
 });
+
+function removeAddId(obj) {
+    var newObj = clone(obj);
+    newObj.id = newObj._id;
+    delete newObj["_id"];
+    return newObj;
+}
+
+function clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = {};
+    if( obj.length !== undefined ) {
+        var arrayCopy = [];
+        for(var i = 0; i < obj.length; i++) {
+            var objInArray = obj[i];
+            if( objInArray.length !== undefined ) {
+            arrayCopy[i] = clone(objInArray);
+            } else {
+            copy = {};
+            for (var attr in objInArray) {
+                if (objInArray.hasOwnProperty(attr)) {
+                    copy[attr] = clone(objInArray[attr]);
+                }
+            }
+            arrayCopy[i] = copy;
+            }
+        }
+        return arrayCopy;
+    } else {
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) {
+                copy[attr] = clone(obj[attr]);
+            }
+        }
+    }
+    return copy;
+}
 
 module.exports = router;
